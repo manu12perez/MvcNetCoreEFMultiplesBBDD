@@ -16,6 +16,13 @@ select
 from EMP
 inner join DEPT on EMP.DEPT_NO = DEPT.DEPT_NO;
 
+delimiter $$
+create procedure SP_ALL_VEMPLEADOS()
+begin
+    select * from V_EMPLEADOS;
+end $$
+delimiter ;
+
 */
 
 namespace MvcNetCoreEFMultiplesBBDD.Repositories
@@ -31,9 +38,14 @@ namespace MvcNetCoreEFMultiplesBBDD.Repositories
 
         public async Task<List<EmpleadoView>> GetEmpleadosAsync()
         {
-            var consulta = from datos in this.context.EmpleadosView
-                           select datos;
+            //SIN PROCEDURE, CON CONSULTA LINQ
+            //var consulta = from datos in this.context.EmpleadosView
+            //               select datos;
 
+            //return await consulta.ToListAsync();
+
+            string sql = "CALL SP_ALL_VEMPLEADOS();";
+            var consulta = this.context.EmpleadosView.FromSqlRaw(sql);
             return await consulta.ToListAsync();
         }
 
