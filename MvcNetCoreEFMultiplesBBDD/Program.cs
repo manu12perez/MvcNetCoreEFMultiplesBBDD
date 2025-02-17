@@ -9,9 +9,20 @@ builder.Services.AddControllersWithViews();
 
 /*****************************************************************************************************************************************/
 
-string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
-builder.Services.AddTransient<RepositoryEmpleados>();
-builder.Services.AddDbContext<HospitalContext>(x => x.UseSqlServer(connectionString));
+//SQL
+//string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
+//builder.Services.AddDbContext<HospitalContext>(x => x.UseSqlServer(connectionString));
+//builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleados>();
+
+//ORACLE
+//string connectionString = builder.Configuration.GetConnectionString("OracleHospital");
+//builder.Services.AddDbContext<HospitalContext>(x => x.UseOracle(connectionString));
+//builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosOracle>();
+
+//MYSQL
+string connectionString = builder.Configuration.GetConnectionString("MySqlHospital");
+builder.Services.AddDbContext<HospitalContext>(x => x.UseMySQL(connectionString));
+builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosMySql>();
 
 /*****************************************************************************************************************************************/
 
